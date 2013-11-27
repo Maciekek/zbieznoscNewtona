@@ -34,11 +34,11 @@ public class zbieznoscNewtona {
 
 	}
 
-	private static double[][] obliczenieFxy() {
+	private static double[][] obliczenieFxy(double[][] aktualnyWynik) {
 		double Fxy[][] = new double[1][2];
 
-		Fxy[0][0] = 2 * startTab[0][0] * startTab[0][1] - 3;
-		Fxy[0][1] = startTab[0][0] * startTab[0][0] - startTab[0][1] - 2;
+		Fxy[0][0] = 2 * aktualnyWynik[0][0] * aktualnyWynik[0][1] - 3;
+		Fxy[0][1] = aktualnyWynik[0][0] * aktualnyWynik[0][0] - aktualnyWynik[0][1] - 2;
 
 		System.out.println("\n------WYNIK F(x,y)---------");
 		System.out.println("| " + Fxy[0][0] + " |");
@@ -47,12 +47,12 @@ public class zbieznoscNewtona {
 		return Fxy;
 	}
 
-	private static double[][] obliczenieFprimXY() {
+	private static double[][] obliczenieFprimXY(double[][] aktualnyWynik) {
 		double fPxy[][] = new double[2][2];
 
-		fPxy[0][0] = 2 * startTab[0][1];
-		fPxy[0][1] = 2 * startTab[0][0];
-		fPxy[1][0] = 2 * startTab[0][0];
+		fPxy[0][0] = 2 * aktualnyWynik[0][1];
+		fPxy[0][1] = 2 * aktualnyWynik[0][0];
+		fPxy[1][0] = 2 * aktualnyWynik[0][0];
 		fPxy[1][1] = -1;
 
 		System.out.println("\n\n-----WYNIK f`(x,y)-----------");
@@ -81,12 +81,14 @@ public class zbieznoscNewtona {
 		double Fxy[][] = new double[1][2];
 		double fPxy[][] = new double[2][2];
 		double fodwrotna[][] = new double[2][2];
+		double aktualnyWynik[][] = startTab;
 		int maxIterationCount = 0;
 		double accuracy = 0;
+		
 
 		wczytywanieDanych(maxIterationCount, accuracy);
-		Fxy = obliczenieFxy();
-		fPxy = obliczenieFprimXY();
+		Fxy = obliczenieFxy(aktualnyWynik);
+		fPxy = obliczenieFprimXY(aktualnyWynik);
 		fodwrotna = macierzOdwrotna(fPxy);
 	}
 }
