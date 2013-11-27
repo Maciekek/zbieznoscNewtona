@@ -2,6 +2,7 @@ package com.zbieznoscNewtona.service;
 
 import java.util.Scanner;
 
+//X[0] = startTab[0][0]      Y[0] = startTab[0][1]
 public class zbieznoscNewtona {
 	static Scanner in = new Scanner(System.in);
 	static double startTab[][] = new double[1][2];
@@ -33,12 +34,27 @@ public class zbieznoscNewtona {
 
 	}
 
+	private static double[][] obliczenieFxy() {
+		double Fxy[][] = new double[1][2];
+
+		Fxy[0][0] = 2 * startTab[0][0] * startTab[0][1] - 3;
+		Fxy[0][1] = startTab[0][0] * startTab[0][0] - startTab[0][1] - 2;
+
+		System.out.println("\n------WYNIK F(x,y)---------");
+		System.out.println("| " + Fxy[0][0] + " |");
+		System.out.println("| " + Fxy[0][1] + " |");
+
+		return Fxy;
+	}
+
 	public static void main(String[] args) {
+		double Fxy[][] = new double[1][2];
 
 		int maxIterationCount = 0;
 		double accuracy = 0;
 
 		wczytywanieDanych(maxIterationCount, accuracy);
+		Fxy = obliczenieFxy();
 	}
 
 }
