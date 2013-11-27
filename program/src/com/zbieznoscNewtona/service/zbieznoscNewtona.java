@@ -61,14 +61,32 @@ public class zbieznoscNewtona {
 		return fPxy;
 	}
 
+	private static double[][] macierzOdwrotna(double[][] fPxy) {
+		double wyznacznik = 0;
+		double fodwrotna[][] = new double[2][2];
+		wyznacznik = fPxy[0][0] * fPxy[1][1] - fPxy[1][0] * fPxy[0][1];
+		System.out.println("Wyznacznik: " + wyznacznik);
+		fodwrotna[0][0] = (1 / wyznacznik) * fPxy[1][1];
+		fodwrotna[1][1] = (1 / wyznacznik) * fPxy[0][0];
+		fodwrotna[0][1] = (1 / wyznacznik) * (-1) * fPxy[0][1];
+		fodwrotna[1][0] = (1 / wyznacznik) * (-1) * fPxy[1][0];
+		System.out.println("---------Macierz odwrotna---------");
+		System.out.println(fodwrotna[0][0] + "  " + fodwrotna[0][1]);
+		System.out.println(fodwrotna[1][0] + "  " + fodwrotna[1][1]);
+		return fPxy;
+
+	}
+
 	public static void main(String[] args) {
 		double Fxy[][] = new double[1][2];
-		double fPxy[][] = new double[1][2];
+		double fPxy[][] = new double[2][2];
+		double fodwrotna[][] = new double[2][2];
 		int maxIterationCount = 0;
 		double accuracy = 0;
 
 		wczytywanieDanych(maxIterationCount, accuracy);
 		Fxy = obliczenieFxy();
 		fPxy = obliczenieFprimXY();
+		fodwrotna = macierzOdwrotna(fPxy);
 	}
 }
