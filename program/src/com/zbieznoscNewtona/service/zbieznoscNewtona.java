@@ -47,14 +47,28 @@ public class zbieznoscNewtona {
 		return Fxy;
 	}
 
+	private static double[][] obliczenieFprimXY() {
+		double fPxy[][] = new double[2][2];
+
+		fPxy[0][0] = 2 * startTab[0][1];
+		fPxy[0][1] = 2 * startTab[0][0];
+		fPxy[1][0] = 2 * startTab[0][0];
+		fPxy[1][1] = -1;
+
+		System.out.println("\n\n-----WYNIK f`(x,y)-----------");
+		System.out.println(fPxy[0][0] + "  " + fPxy[0][1]);
+		System.out.println(fPxy[1][0] + "  " + fPxy[1][1]);
+		return fPxy;
+	}
+
 	public static void main(String[] args) {
 		double Fxy[][] = new double[1][2];
-
+		double fPxy[][] = new double[1][2];
 		int maxIterationCount = 0;
 		double accuracy = 0;
 
 		wczytywanieDanych(maxIterationCount, accuracy);
 		Fxy = obliczenieFxy();
+		fPxy = obliczenieFprimXY();
 	}
-
 }
