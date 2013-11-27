@@ -38,7 +38,8 @@ public class zbieznoscNewtona {
 		double Fxy[][] = new double[1][2];
 
 		Fxy[0][0] = 2 * aktualnyWynik[0][0] * aktualnyWynik[0][1] - 3;
-		Fxy[0][1] = aktualnyWynik[0][0] * aktualnyWynik[0][0] - aktualnyWynik[0][1] - 2;
+		Fxy[0][1] = aktualnyWynik[0][0] * aktualnyWynik[0][0]
+				- aktualnyWynik[0][1] - 2;
 
 		System.out.println("\n------WYNIK F(x,y)---------");
 		System.out.println("| " + Fxy[0][0] + " |");
@@ -77,6 +78,19 @@ public class zbieznoscNewtona {
 
 	}
 
+	private static double[][] wyliczWzor(double[][] aktualnyWynik, double[][] fOdwrotna, double[][] fxy) {
+		double wynik[][] = new double[1][2];
+		double tmp[][] = new double [1][2];
+		
+		tmp[0][0] = (fOdwrotna[0][0] * fxy[0][0]) + (fOdwrotna[0][1] * fxy[1][0]);
+		tmp[1][0] = (fOdwrotna[1][0] * fxy[0][0]) + (fOdwrotna[1][1] * fxy[1][0]);
+		
+		wynik[0][0] = aktualnyWynik[0][0] - tmp[0][0];
+		wynik[1][0] = aktualnyWynik[1][0] - tmp[1][0];
+		
+		return wynik;
+	}
+
 	public static void main(String[] args) {
 		double Fxy[][] = new double[1][2];
 		double fPxy[][] = new double[2][2];
@@ -84,11 +98,12 @@ public class zbieznoscNewtona {
 		double aktualnyWynik[][] = startTab;
 		int maxIterationCount = 0;
 		double accuracy = 0;
-		
 
 		wczytywanieDanych(maxIterationCount, accuracy);
 		Fxy = obliczenieFxy(aktualnyWynik);
 		fPxy = obliczenieFprimXY(aktualnyWynik);
 		fodwrotna = macierzOdwrotna(fPxy);
+		aktualnyWynik = wyliczWzor(aktualnyWynik, fodwrotna, Fxy);
+
 	}
 }
