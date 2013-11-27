@@ -6,8 +6,11 @@ import java.util.Scanner;
 public class zbieznoscNewtona {
 	static Scanner in = new Scanner(System.in);
 	static double startTab[][] = new double[1][2];
+	static double[][] bestXY = new double[1][2];
+	static int maxIterationCount = 0;
+	static double accuracy = 0;
 
-	public static void wczytywanieDanych(int maxIterationCount, double accuracy) {
+	public static void wczytywanieDanych() {
 
 		System.out
 				.println("Witaj w programie badajacym eksperymentalnie zbieznosc Newtona");
@@ -78,32 +81,105 @@ public class zbieznoscNewtona {
 
 	}
 
-	private static double[][] wyliczWzor(double[][] aktualnyWynik, double[][] fOdwrotna, double[][] fxy) {
+	private static double[][] wyliczXY(double[][] aktualnyWynik,
+			double[][] fOdwrotna, double[][] fxy) {
 		double wynik[][] = new double[1][2];
-		double tmp[][] = new double [1][2];
-		
-		tmp[0][0] = (fOdwrotna[0][0] * fxy[0][0]) + (fOdwrotna[0][1] * fxy[1][0]);
-		tmp[1][0] = (fOdwrotna[1][0] * fxy[0][0]) + (fOdwrotna[1][1] * fxy[1][0]);
-		
+		double tmp[][] = new double[1][2];
+
+		tmp[0][0] = (fOdwrotna[0][0] * fxy[0][0])
+				+ (fOdwrotna[1][0] * fxy[0][1]);
+		System.out.print(tmp[0][0]);
+		tmp[0][1] = (fOdwrotna[0][1] * fxy[0][0])
+				+ (fOdwrotna[1][1] * fxy[0][1]);
+		System.out.print(tmp[0][1]);
 		wynik[0][0] = aktualnyWynik[0][0] - tmp[0][0];
-		wynik[1][0] = aktualnyWynik[1][0] - tmp[1][0];
-		
+		wynik[0][1] = aktualnyWynik[0][1] - tmp[0][1];
+
+		System.out.println("\n------WYNIK---------");
+		System.out.println("| " + wynik[0][0] + " |");
+		System.out.println("| " + wynik[0][1] + " |");
 		return wynik;
+	}
+
+	private static double[][] wyliczWynik(double[][] aktualnyXY) {
+
+		double wynik[][] = new double[1][2];
+
+		wynik[0][0] = ((2 * aktualnyXY[0][0] * aktualnyXY[0][1]) - 3);
+		wynik[0][1] =(((aktualnyXY[0][0] * aktualnyXY[0][0]) - aktualnyXY[0][1]) - 2);
+		System.out.println("Wwynik pierwszego rownania = " + wynik[0][0]);
+		System.out.println("Wynik drugiego rownania = " + wynik[0][1]);
+		System.out.println("Dla x = " + aktualnyXY[0][0] + " , y = "
+				+ aktualnyXY[0][1]);
+
+		return wynik;
+	}
+
+	private static double[][] sprawdzWynik(double[][] wynik,
+			double[][] bestResult) {
+
+		if (bestResult == null)
+			return wynik;
+		if (wynik[0][0] < bestResult[0][0] && wynik[0][1] < bestResult[0][1]) {
+			bestXY[0][0] = wynik[0][0];
+			bestXY[0][1] = wynik[0][1];
+			return wynik;
+		} else
+			return bestResult;
+	}
+
+	private static boolean szukajDalej(double[][] bestResult) {
+
+		String odpowiedz = null;
+		System.out.println("\n------WYNIK---------");
+		System.out.println("Najlepszy wynik pierwszego rownania = "
+				+ bestResult[0][0]);
+		System.out.println("Najlepszy wynik drugiego rownania = "
+				+ bestResult[0][1]);
+		System.out
+				.println("Dla x = " + bestXY[0][0] + " , y = " + bestXY[0][1]);
+		System.out.println("Czy chcesz kontynuowac szukanie?(T/N)");
+		odpowiedz = in.next();
+
+		if ("T".equalsIgnoreCase(odpowiedz))
+			return false;
+		else
+			return true;
 	}
 
 	public static void main(String[] args) {
 		double Fxy[][] = new double[1][2];
 		double fPxy[][] = new double[2][2];
 		double fodwrotna[][] = new double[2][2];
-		double aktualnyWynik[][] = startTab;
-		int maxIterationCount = 0;
-		double accuracy = 0;
+		double aktualnyXY[][] = startTab;
+		double wynik[][] = new double[1][2];
+		double bestResult[][] = new double[1][2];
+		bestResult[0][1] = 100000;
+		bestResult[0][0] = 100000;
 
-		wczytywanieDanych(maxIterationCount, accuracy);
-		Fxy = obliczenieFxy(aktualnyWynik);
-		fPxy = obliczenieFprimXY(aktualnyWynik);
-		fodwrotna = macierzOdwrotna(fPxy);
-		aktualnyWynik = wyliczWzor(aktualnyWynik, fodwrotna, Fxy);
+		wczytywanieDanych();
+
+		int i = 0;
+		boolean czyKontynuowac = false;
+		while (!czyKontynuowac || i <= maxIterationCount) {
+			Fxy = obliczenieFxy(aktualnyXY);
+			fPxy = obliczenieFprimXY(aktualnyXY);
+			fodwrotna = macierzOdwrotna(fPxy);
+			aktualnyXY = wyliczXY(aktualnyXY, fodwrotna, Fxy);
+			wynik = wyliczWynik(aktualnyXY);
+			bestResult = sprawdzWynik(wynik, bestResult);
+
+			if ((bestResult[0][0] < accuracy) && (bestResult[0][1] < accuracy)) {
+				czyKontynuowac = szukajDalej(bestResult);
+				i = 0;
+			}
+			if (i == maxIterationCount) {
+				czyKontynuowac = szukajDalej(bestResult);
+				i = 0;
+			}
+			i++;
+		}
 
 	}
+
 }
