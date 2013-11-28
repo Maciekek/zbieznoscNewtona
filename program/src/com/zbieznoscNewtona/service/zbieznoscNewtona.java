@@ -1,5 +1,6 @@
 package com.zbieznoscNewtona.service;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 //X[0] = startTab[0][0]      Y[0] = startTab[0][1]
@@ -9,6 +10,7 @@ public class zbieznoscNewtona {
 	static double[][] bestXY = new double[1][2];
 	static int maxIterationCount = 0;
 	static double accuracy = 0;
+	final static double DECIMAL = 1000.0;
 
 	public static void wczytywanieDanych() {
 
@@ -40,9 +42,12 @@ public class zbieznoscNewtona {
 	private static double[][] obliczenieFxy(double[][] aktualnyWynik) {
 		double Fxy[][] = new double[1][2];
 
-		Fxy[0][0] = 2 * aktualnyWynik[0][0] * aktualnyWynik[0][1] - 3;
-		Fxy[0][1] = aktualnyWynik[0][0] * aktualnyWynik[0][0]
-				- aktualnyWynik[0][1] - 2;
+		Fxy[0][0] = Math.round((2 * aktualnyWynik[0][0] * aktualnyWynik[0][1])
+				- 3 * DECIMAL)
+				/ DECIMAL;
+		Fxy[0][1] = Math.round(aktualnyWynik[0][0] * aktualnyWynik[0][0]
+				- aktualnyWynik[0][1] - 2 * DECIMAL)
+				/ DECIMAL;
 
 		System.out.println("\n------WYNIK F(x,y)---------");
 		System.out.println("| " + Fxy[0][0] + " |");
@@ -54,9 +59,9 @@ public class zbieznoscNewtona {
 	private static double[][] obliczenieFprimXY(double[][] aktualnyWynik) {
 		double fPxy[][] = new double[2][2];
 
-		fPxy[0][0] = 2 * aktualnyWynik[0][1];
-		fPxy[0][1] = 2 * aktualnyWynik[0][0];
-		fPxy[1][0] = 2 * aktualnyWynik[0][0];
+		fPxy[0][0] = Math.round(2 * aktualnyWynik[0][1] * DECIMAL) / DECIMAL;
+		fPxy[0][1] = Math.round(2 * aktualnyWynik[0][0] * DECIMAL) / DECIMAL;
+		fPxy[1][0] = Math.round(2 * aktualnyWynik[0][0] * DECIMAL) / DECIMAL;
 		fPxy[1][1] = -1;
 
 		System.out.println("\n\n-----WYNIK f`(x,y)-----------");
@@ -68,12 +73,20 @@ public class zbieznoscNewtona {
 	private static double[][] macierzOdwrotna(double[][] fPxy) {
 		double wyznacznik = 0;
 		double fodwrotna[][] = new double[2][2];
-		wyznacznik = fPxy[0][0] * fPxy[1][1] - fPxy[1][0] * fPxy[0][1];
+		wyznacznik = Math.round(fPxy[0][0] * fPxy[1][1] - fPxy[1][0]
+				* fPxy[0][1] * DECIMAL)
+				/ DECIMAL;
 		System.out.println("Wyznacznik: " + wyznacznik);
-		fodwrotna[0][0] = (1 / wyznacznik) * fPxy[1][1];
-		fodwrotna[1][1] = (1 / wyznacznik) * fPxy[0][0];
-		fodwrotna[0][1] = (1 / wyznacznik) * (-1) * fPxy[0][1];
-		fodwrotna[1][0] = (1 / wyznacznik) * (-1) * fPxy[1][0];
+		fodwrotna[0][0] = Math.round((1 / wyznacznik) * fPxy[1][1] * DECIMAL)
+				/ DECIMAL;
+		fodwrotna[1][1] = Math.round((1 / wyznacznik) * fPxy[0][0] * DECIMAL)
+				/ DECIMAL;
+		fodwrotna[0][1] = Math.round((1 / wyznacznik) * (-1) * fPxy[0][1]
+				* DECIMAL)
+				/ DECIMAL;
+		fodwrotna[1][0] = Math.round((1 / wyznacznik) * (-1) * fPxy[1][0]
+				* DECIMAL)
+				/ DECIMAL;
 		System.out.println("---------Macierz odwrotna---------");
 		System.out.println(fodwrotna[0][0] + "  " + fodwrotna[0][1]);
 		System.out.println(fodwrotna[1][0] + "  " + fodwrotna[1][1]);
@@ -86,14 +99,17 @@ public class zbieznoscNewtona {
 		double wynik[][] = new double[1][2];
 		double tmp[][] = new double[1][2];
 
-		tmp[0][0] = (fOdwrotna[0][0] * fxy[0][0])
-				+ (fOdwrotna[1][0] * fxy[0][1]);
+		tmp[0][0] = Math.round((fOdwrotna[0][0] * fxy[0][0])
+				+ (fOdwrotna[1][0] * fxy[0][1] * DECIMAL) / DECIMAL);
 		System.out.print(tmp[0][0]);
-		tmp[0][1] = (fOdwrotna[0][1] * fxy[0][0])
-				+ (fOdwrotna[1][1] * fxy[0][1]);
+		tmp[0][1] = Math.round((fOdwrotna[0][1] * fxy[0][0])
+				+ (fOdwrotna[1][1] * fxy[0][1]) * DECIMAL)
+				/ DECIMAL;
 		System.out.print(tmp[0][1]);
-		wynik[0][0] = aktualnyWynik[0][0] - tmp[0][0];
-		wynik[0][1] = aktualnyWynik[0][1] - tmp[0][1];
+		wynik[0][0] = Math.round(aktualnyWynik[0][0] - tmp[0][0] * DECIMAL)
+				/ DECIMAL;
+		wynik[0][1] = Math.round(aktualnyWynik[0][1] - tmp[0][1] * DECIMAL)
+				/ DECIMAL;
 
 		System.out.println("\n------WYNIK---------");
 		System.out.println("| " + wynik[0][0] + " |");
@@ -105,8 +121,14 @@ public class zbieznoscNewtona {
 
 		double wynik[][] = new double[1][2];
 
-		wynik[0][0] = ((2 * aktualnyXY[0][0] * aktualnyXY[0][1]) - 3);
-		wynik[0][1] =(((aktualnyXY[0][0] * aktualnyXY[0][0]) - aktualnyXY[0][1]) - 2);
+		wynik[0][0] = Math
+				.round(((2 * aktualnyXY[0][0] * aktualnyXY[0][1]) - 3)
+						* DECIMAL)
+				/ DECIMAL;
+		wynik[0][1] = Math
+				.round((((aktualnyXY[0][0] * aktualnyXY[0][0]) - aktualnyXY[0][1]) - 2)
+						* DECIMAL)
+				/ DECIMAL;
 		System.out.println("Wwynik pierwszego rownania = " + wynik[0][0]);
 		System.out.println("Wynik drugiego rownania = " + wynik[0][1]);
 		System.out.println("Dla x = " + aktualnyXY[0][0] + " , y = "
@@ -161,7 +183,7 @@ public class zbieznoscNewtona {
 
 		int i = 0;
 		boolean czyKontynuowac = false;
-		while (!czyKontynuowac || i <= maxIterationCount) {
+		while (!czyKontynuowac && i <= maxIterationCount) {
 			Fxy = obliczenieFxy(aktualnyXY);
 			fPxy = obliczenieFprimXY(aktualnyXY);
 			fodwrotna = macierzOdwrotna(fPxy);
@@ -171,11 +193,11 @@ public class zbieznoscNewtona {
 
 			if ((bestResult[0][0] < accuracy) && (bestResult[0][1] < accuracy)) {
 				czyKontynuowac = szukajDalej(bestResult);
-				i = 0;
+				maxIterationCount = maxIterationCount + 50;
 			}
 			if (i == maxIterationCount) {
 				czyKontynuowac = szukajDalej(bestResult);
-				i = 0;
+				maxIterationCount = maxIterationCount + 50;
 			}
 			i++;
 		}
