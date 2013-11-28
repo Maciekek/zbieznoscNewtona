@@ -42,11 +42,13 @@ public class zbieznoscNewtona {
 	private static double[][] obliczenieFxy(double[][] aktualnyWynik) {
 		double Fxy[][] = new double[1][2];
 
-		Fxy[0][0] = Math.round((2 * aktualnyWynik[0][0] * aktualnyWynik[0][1])
-				- 3 * DECIMAL)
+		Fxy[0][0] = Math
+				.round(((2 * aktualnyWynik[0][0] * aktualnyWynik[0][1]) - 3)
+						* DECIMAL)
 				/ DECIMAL;
-		Fxy[0][1] = Math.round(aktualnyWynik[0][0] * aktualnyWynik[0][0]
-				- aktualnyWynik[0][1] - 2 * DECIMAL)
+		Fxy[0][1] = Math
+				.round((((aktualnyWynik[0][0] * aktualnyWynik[0][0]) - aktualnyWynik[0][1]) - 2)
+						* DECIMAL)
 				/ DECIMAL;
 
 		System.out.println("\n------WYNIK F(x,y)---------");
@@ -59,9 +61,9 @@ public class zbieznoscNewtona {
 	private static double[][] obliczenieFprimXY(double[][] aktualnyWynik) {
 		double fPxy[][] = new double[2][2];
 
-		fPxy[0][0] = Math.round(2 * aktualnyWynik[0][1] * DECIMAL) / DECIMAL;
-		fPxy[0][1] = Math.round(2 * aktualnyWynik[0][0] * DECIMAL) / DECIMAL;
-		fPxy[1][0] = Math.round(2 * aktualnyWynik[0][0] * DECIMAL) / DECIMAL;
+		fPxy[0][0] = Math.round((2 * aktualnyWynik[0][1]) * DECIMAL) / DECIMAL;
+		fPxy[0][1] = Math.round((2 * aktualnyWynik[0][0]) * DECIMAL) / DECIMAL;
+		fPxy[1][0] = Math.round((2 * aktualnyWynik[0][0]) * DECIMAL) / DECIMAL;
 		fPxy[1][1] = -1;
 
 		System.out.println("\n\n-----WYNIK f`(x,y)-----------");
@@ -73,18 +75,19 @@ public class zbieznoscNewtona {
 	private static double[][] macierzOdwrotna(double[][] fPxy) {
 		double wyznacznik = 0;
 		double fodwrotna[][] = new double[2][2];
-		wyznacznik = Math.round(fPxy[0][0] * fPxy[1][1] - fPxy[1][0]
-				* fPxy[0][1] * DECIMAL)
+		wyznacznik = Math
+				.round(((fPxy[0][0] * fPxy[1][1]) - (fPxy[1][0] * fPxy[0][1]))
+						* DECIMAL)
 				/ DECIMAL;
 		System.out.println("Wyznacznik: " + wyznacznik);
-		fodwrotna[0][0] = Math.round((1 / wyznacznik) * fPxy[1][1] * DECIMAL)
+		fodwrotna[0][0] = Math.round(((1 / wyznacznik) * fPxy[1][1]) * DECIMAL)
 				/ DECIMAL;
-		fodwrotna[1][1] = Math.round((1 / wyznacznik) * fPxy[0][0] * DECIMAL)
+		fodwrotna[1][1] = Math.round(((1 / wyznacznik) * fPxy[0][0]) * DECIMAL)
 				/ DECIMAL;
-		fodwrotna[0][1] = Math.round((1 / wyznacznik) * (-1) * fPxy[0][1]
+		fodwrotna[0][1] = Math.round(((1 / wyznacznik) * (-1) * fPxy[0][1])
 				* DECIMAL)
 				/ DECIMAL;
-		fodwrotna[1][0] = Math.round((1 / wyznacznik) * (-1) * fPxy[1][0]
+		fodwrotna[1][0] = Math.round(((1 / wyznacznik) * (-1) * fPxy[1][0])
 				* DECIMAL)
 				/ DECIMAL;
 		System.out.println("---------Macierz odwrotna---------");
@@ -99,16 +102,17 @@ public class zbieznoscNewtona {
 		double wynik[][] = new double[1][2];
 		double tmp[][] = new double[1][2];
 
-		tmp[0][0] = Math.round((fOdwrotna[0][0] * fxy[0][0])
-				+ (fOdwrotna[1][0] * fxy[0][1] * DECIMAL) / DECIMAL);
-		System.out.print(tmp[0][0]);
-		tmp[0][1] = Math.round((fOdwrotna[0][1] * fxy[0][0])
-				+ (fOdwrotna[1][1] * fxy[0][1]) * DECIMAL)
+		tmp[0][0] = Math
+				.round(((fOdwrotna[0][0] * fxy[0][0]) + (fOdwrotna[1][0] * fxy[0][1])
+						* DECIMAL)
+						/ DECIMAL);
+		tmp[0][1] = Math
+				.round(((fOdwrotna[0][1] * fxy[0][0]) + (fOdwrotna[1][1] * fxy[0][1]))
+						* DECIMAL)
 				/ DECIMAL;
-		System.out.print(tmp[0][1]);
-		wynik[0][0] = Math.round(aktualnyWynik[0][0] - tmp[0][0] * DECIMAL)
+		wynik[0][0] = Math.round((aktualnyWynik[0][0] - tmp[0][0]) * DECIMAL)
 				/ DECIMAL;
-		wynik[0][1] = Math.round(aktualnyWynik[0][1] - tmp[0][1] * DECIMAL)
+		wynik[0][1] = Math.round((aktualnyWynik[0][1] - tmp[0][1]) * DECIMAL)
 				/ DECIMAL;
 
 		System.out.println("\n------WYNIK---------");
@@ -129,6 +133,8 @@ public class zbieznoscNewtona {
 				.round((((aktualnyXY[0][0] * aktualnyXY[0][0]) - aktualnyXY[0][1]) - 2)
 						* DECIMAL)
 				/ DECIMAL;
+		
+		
 		System.out.println("Wwynik pierwszego rownania = " + wynik[0][0]);
 		System.out.println("Wynik drugiego rownania = " + wynik[0][1]);
 		System.out.println("Dla x = " + aktualnyXY[0][0] + " , y = "
@@ -148,6 +154,7 @@ public class zbieznoscNewtona {
 			return wynik;
 		} else
 			return bestResult;
+
 	}
 
 	private static boolean szukajDalej(double[][] bestResult) {
@@ -176,8 +183,6 @@ public class zbieznoscNewtona {
 		double aktualnyXY[][] = startTab;
 		double wynik[][] = new double[1][2];
 		double bestResult[][] = new double[1][2];
-		bestResult[0][1] = 100000;
-		bestResult[0][0] = 100000;
 
 		wczytywanieDanych();
 
@@ -189,6 +194,13 @@ public class zbieznoscNewtona {
 			fodwrotna = macierzOdwrotna(fPxy);
 			aktualnyXY = wyliczXY(aktualnyXY, fodwrotna, Fxy);
 			wynik = wyliczWynik(aktualnyXY);
+			if (i == 0) {
+				bestResult[0][0] = wynik[0][0];
+				bestResult[0][1] = wynik[0][1];
+				bestXY[0][0] = aktualnyXY[0][0];
+				bestXY[0][1] = aktualnyXY[0][1];
+			}
+
 			bestResult = sprawdzWynik(wynik, bestResult);
 
 			if ((bestResult[0][0] < accuracy) && (bestResult[0][1] < accuracy)) {
