@@ -1,9 +1,8 @@
 package com.zbieznoscNewtona.service;
 
-import java.text.DecimalFormat;
 import java.util.Scanner;
 
-//X[0] = startTab[0][0]      Y[0] = startTab[0][1]
+// X[0] = startTab[0][0] Y[0] = startTab[0][1]
 public class zbieznoscNewtona {
 	static Scanner in = new Scanner(System.in);
 	static double startTab[][] = new double[1][2];
@@ -79,6 +78,12 @@ public class zbieznoscNewtona {
 				.round(((fPxy[0][0] * fPxy[1][1]) - (fPxy[1][0] * fPxy[0][1]))
 						* DECIMAL)
 				/ DECIMAL;
+
+		if (wyznacznik == 0) {
+			System.out.println("Wyznacznik rowny zero");
+			throw new IllegalArgumentException("");
+
+		}
 		System.out.println("Wyznacznik: " + wyznacznik);
 		fodwrotna[0][0] = Math.round(((1 / wyznacznik) * fPxy[1][1]) * DECIMAL)
 				/ DECIMAL;
@@ -133,8 +138,7 @@ public class zbieznoscNewtona {
 				.round((((aktualnyXY[0][0] * aktualnyXY[0][0]) - aktualnyXY[0][1]) - 2)
 						* DECIMAL)
 				/ DECIMAL;
-		
-		
+
 		System.out.println("Wwynik pierwszego rownania = " + wynik[0][0]);
 		System.out.println("Wynik drugiego rownania = " + wynik[0][1]);
 		System.out.println("Dla x = " + aktualnyXY[0][0] + " , y = "
