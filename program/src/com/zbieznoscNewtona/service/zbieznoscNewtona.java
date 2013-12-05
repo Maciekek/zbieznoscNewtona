@@ -81,7 +81,7 @@ public class zbieznoscNewtona {
 
 		if (wyznacznik == 0) {
 			System.out.println("Wyznacznik rowny zero");
-			throw new IllegalArgumentException("");
+			System.exit(0);
 
 		}
 		System.out.println("Wyznacznik: " + wyznacznik);
