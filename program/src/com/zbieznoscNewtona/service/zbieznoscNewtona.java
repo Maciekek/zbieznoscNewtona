@@ -50,9 +50,11 @@ public class zbieznoscNewtona {
 						* DECIMAL)
 				/ DECIMAL;
 
-		System.out.println("\n------WYNIK F(x,y)---------");
-		System.out.println("| " + Fxy[0][0] + " |");
-		System.out.println("| " + Fxy[0][1] + " |");
+		/*
+		 * System.out.println("\n------WYNIK F(x,y)---------");
+		 * System.out.println("| " + Fxy[0][0] + " |"); System.out.println("| "
+		 * + Fxy[0][1] + " |");
+		 */
 
 		return Fxy;
 	}
@@ -65,9 +67,11 @@ public class zbieznoscNewtona {
 		fPxy[1][0] = Math.round((2 * aktualnyWynik[0][0]) * DECIMAL) / DECIMAL;
 		fPxy[1][1] = -1;
 
-		System.out.println("\n\n-----WYNIK f`(x,y)-----------");
-		System.out.println(fPxy[0][0] + "  " + fPxy[0][1]);
-		System.out.println(fPxy[1][0] + "  " + fPxy[1][1]);
+		/*
+		 * System.out.println("\n\n-----WYNIK f`(x,y)-----------");
+		 * System.out.println(fPxy[0][0] + "  " + fPxy[0][1]);
+		 * System.out.println(fPxy[1][0] + "  " + fPxy[1][1]);
+		 */
 		return fPxy;
 	}
 
@@ -84,7 +88,7 @@ public class zbieznoscNewtona {
 			System.exit(0);
 
 		}
-		System.out.println("Wyznacznik: " + wyznacznik);
+		//System.out.println("Wyznacznik: " + wyznacznik);
 		fodwrotna[0][0] = Math.round(((1 / wyznacznik) * fPxy[1][1]) * DECIMAL)
 				/ DECIMAL;
 		fodwrotna[1][1] = Math.round(((1 / wyznacznik) * fPxy[0][0]) * DECIMAL)
@@ -95,9 +99,11 @@ public class zbieznoscNewtona {
 		fodwrotna[1][0] = Math.round(((1 / wyznacznik) * (-1) * fPxy[1][0])
 				* DECIMAL)
 				/ DECIMAL;
-		System.out.println("---------Macierz odwrotna---------");
-		System.out.println(fodwrotna[0][0] + "  " + fodwrotna[0][1]);
-		System.out.println(fodwrotna[1][0] + "  " + fodwrotna[1][1]);
+		/*
+		 * System.out.println("---------Macierz odwrotna---------");
+		 * System.out.println(fodwrotna[0][0] + "  " + fodwrotna[0][1]);
+		 * System.out.println(fodwrotna[1][0] + "  " + fodwrotna[1][1]);
+		 */
 		return fPxy;
 
 	}
@@ -120,9 +126,10 @@ public class zbieznoscNewtona {
 		wynik[0][1] = Math.round((aktualnyWynik[0][1] - tmp[0][1]) * DECIMAL)
 				/ DECIMAL;
 
-		System.out.println("\n------WYNIK---------");
-		System.out.println("| " + wynik[0][0] + " |");
-		System.out.println("| " + wynik[0][1] + " |");
+		/*
+		 * System.out.println("\n------WYNIK---------"); System.out.println("| "
+		 * + wynik[0][0] + " |"); System.out.println("| " + wynik[0][1] + " |");
+		 */
 		return wynik;
 	}
 
@@ -139,10 +146,12 @@ public class zbieznoscNewtona {
 						* DECIMAL)
 				/ DECIMAL;
 
-		System.out.println("Wwynik pierwszego rownania = " + wynik[0][0]);
-		System.out.println("Wynik drugiego rownania = " + wynik[0][1]);
-		System.out.println("Dla x = " + aktualnyXY[0][0] + " , y = "
-				+ aktualnyXY[0][1]);
+		/*
+		 * System.out.println("Wwynik pierwszego rownania = " + wynik[0][0]);
+		 * System.out.println("Wynik drugiego rownania = " + wynik[0][1]);
+		 * System.out.println("Dla x = " + aktualnyXY[0][0] + " , y = " +
+		 * aktualnyXY[0][1]);
+		 */
 
 		return wynik;
 	}
@@ -164,20 +173,21 @@ public class zbieznoscNewtona {
 	private static boolean szukajDalej(double[][] bestResult) {
 
 		String odpowiedz = null;
-		System.out.println("\n------WYNIK---------");
-		System.out.println("Najlepszy wynik pierwszego rownania = "
-				+ bestResult[0][0]);
-		System.out.println("Najlepszy wynik drugiego rownania = "
-				+ bestResult[0][1]);
-		System.out
-				.println("Dla x = " + bestXY[0][0] + " , y = " + bestXY[0][1]);
-		System.out.println("Czy chcesz kontynuowac szukanie?(T/N)");
-		odpowiedz = in.next();
+		if ((bestResult[0][0] < accuracy) && (bestResult[0][1] < accuracy)) {
 
-		if ("T".equalsIgnoreCase(odpowiedz))
-			return false;
-		else
-			return true;
+			System.out.println("Uklad jest zbiezny.");
+			System.out.println("\n------WYNIK---------");
+			System.out
+					.println("x = " + bestXY[0][0] + " , y = " + bestXY[0][1]);
+			System.out.println("Czy chcesz kontynuowac szukanie?(T/N)");
+			odpowiedz = in.next();
+			if ("T".equalsIgnoreCase(odpowiedz))
+				return false;
+			else
+				return true;
+		} else
+			System.out.println("Uklad jest rozbiezny.");
+		return true;
 	}
 
 	public static void main(String[] args) {
