@@ -82,13 +82,12 @@ public class zbieznoscNewtona {
 				.round(((fPxy[0][0] * fPxy[1][1]) - (fPxy[1][0] * fPxy[0][1]))
 						* DECIMAL)
 				/ DECIMAL;
-
 		if (wyznacznik == 0) {
 			System.out.println("Wyznacznik rowny zero");
 			System.exit(0);
 
 		}
-		//System.out.println("Wyznacznik: " + wyznacznik);
+		// System.out.println("Wyznacznik: " + wyznacznik);
 		fodwrotna[0][0] = Math.round(((1 / wyznacznik) * fPxy[1][1]) * DECIMAL)
 				/ DECIMAL;
 		fodwrotna[1][1] = Math.round(((1 / wyznacznik) * fPxy[0][0]) * DECIMAL)
@@ -99,12 +98,12 @@ public class zbieznoscNewtona {
 		fodwrotna[1][0] = Math.round(((1 / wyznacznik) * (-1) * fPxy[1][0])
 				* DECIMAL)
 				/ DECIMAL;
-		/*
-		 * System.out.println("---------Macierz odwrotna---------");
-		 * System.out.println(fodwrotna[0][0] + "  " + fodwrotna[0][1]);
-		 * System.out.println(fodwrotna[1][0] + "  " + fodwrotna[1][1]);
-		 */
-		return fPxy;
+
+		// System.out.println("---------Macierz odwrotna---------");
+		// System.out.println(fodwrotna[0][0] + "  " + fodwrotna[0][1]);
+		// System.out.println(fodwrotna[1][0] + "  " + fodwrotna[1][1]);
+
+		return fodwrotna;
 
 	}
 
@@ -152,7 +151,6 @@ public class zbieznoscNewtona {
 		 * System.out.println("Dla x = " + aktualnyXY[0][0] + " , y = " +
 		 * aktualnyXY[0][1]);
 		 */
-
 		return wynik;
 	}
 
